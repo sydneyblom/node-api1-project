@@ -54,5 +54,28 @@ server.get('/users/:id', (req, res) => {
 
 });
 
+server.post ('/users', (req,res) =>{
+        const userData = req.body;
+        //if missing users name or bio
+        if (!userData.bio || !userData.name){
+            res.status(400).json({ errorMessage: 'Please provide name and bio for the user.'})
+        }
+        else {
+        //cretes a user if name and bio are there
+            db.insert(userData)
+            .then (user=> {
+                res.status(201).json(user)
+            })
+        .catch(err=>{
+        //catches error
+            res.status(500).json({message: 'There was an error while saving the user to the database'})
+        })
+        }
+    });
+    
 
 
+
+
+    const port = 8000; // localhost:8000
+    server.listen(port, () => console.log('\n=== API on port 8000 ===\n'));
