@@ -15,3 +15,15 @@ server.get('/',(req, res) =>{
     res.send("Server is working")
 })
 
+
+//GET to users that returns a list of users
+server.get ('/users', (req, res) => {
+    db.find()
+    .then (users => {
+        res.status(200).json(hubs);
+    })
+    .catch(err =>{
+        console.log('error', err);
+        res.status(500).json({error: 'failed to get users from db'})
+    })
+})
