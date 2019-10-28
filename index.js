@@ -27,25 +27,32 @@ server.get ('/users', (req, res) => {
         res.status(500).json({error: 'The users information could not be retrieved.'})
     })
 });
-//getting id and will return the user at that ID
-server.get ('/api/users', (req,res) =>{
-    const userId = req.params.id
-db.findById(userID)
-.then (user=>{
-    //if users doesn't exist return error
-    if(!user){
-        res.status.(404).json({'The user with the specified ID does not exist.'})
-    }
-    else {
-        //success message 
-        res.status(200).json(user);
-    }
-})
-.catch(err)=> {
-res.status(500).json({message: 'The user information could not be retrieved.'});
-})
-});
 
+
+
+
+//gets uid and returns the user at that ID
+server.get('/users/:id', (req, res) => {
+
+
+    const userId = req.params.id;
+    db.findById(userId)
+    .then(user => {
+        if(!user){
+
+            res.status(404).json({message: 'The user with the specified ID does not exist.'})
+        }
+        else {
+            res.status(200).json(user);
+
+        }       
+
+    })
+    .catch(error => {
+        res.status(500).json({message: 'The user information could not be retrieved.'});
+    })
+
+});
 
 
 
